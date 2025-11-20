@@ -74,13 +74,16 @@
   - 데모에 어울리는 최소한의 깔끔한 스타일링.
 
  - **기술 스택**
+   - 리포지토리 구성: **Node.js 기반 모노레포**
+     - 하나의 Git 리포지토리에서 프론트엔드와 백엔드, 인프라(CDK)를 함께 관리
+     - 예: npm 또는 pnpm workspaces를 사용해 패키지별 의존성을 관리
    - 프론트엔드 프레임워크: React
      - UI 라이브러리: Mantine (React UI 컴포넌트 라이브러리)
      - 상태 관리: React Context + useReducer
      - 테스트: Jest, React Testing Library
-  - 백엔드: Node.js(TypeScript)
-  - 인프라: AWS CDK로 서버리스 (Api GateWay, Lambda, DynamoDB) 아키텍처 사용
-  - 빌드 도구: Vite
+   - 백엔드: Node.js(TypeScript)
+   - 인프라: AWS CDK로 서버리스 (Api GateWay, Lambda, DynamoDB) 아키텍처 사용
+   - 빌드 도구: Vite
 ---
 
 ### 6. 화면(페이지) 구성 초안

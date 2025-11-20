@@ -1,16 +1,21 @@
 ## TODO 웹 앱 개발 체크리스트 (TDD 중심)
 
-`docs/todo_app_design.md` 설계를 기반으로, **코어 비즈니스 로직은 TDD**로 진행하기 위한 작업 순서 체크리스트이다.  
+`docs/design.md` 설계를 기반으로, **코어 비즈니스 로직은 TDD**로 진행하기 위한 작업 순서 체크리스트이다.  
 각 단계의 **커밋 포인트 예시**도 함께 정리했다.
 
 ---
 
 ### 1. 공통 환경 세팅
 
+- [ ] **모노레포 구조 및 워크스페이스 설정**
+  - [ ] 루트 `package.json` 생성 및 npm/pnpm workspaces 설정
+  - [ ] `apps/web`, `apps/api`, `infra/cdk` (필요 시 `packages/shared`) 디렉터리 생성
+  - **커밋 포인트**: `chore: 모노레포 구조 및 워크스페이스 초기 설정`
+
 - [ ] **Node/패키지 환경 세팅**
-  - [ ] `package.json` 생성
+  - [ ] 루트와 각 앱에 필요한 `package.json` 생성
   - [ ] 공통 의존성 추가: TypeScript, Jest, ts-jest, @types/jest, ESLint 등
-  - [ ] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react 등
+  - [ ] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react, Mantine 관련 패키지 등
   - [ ] 백엔드 의존성 추가: AWS SDK(v3), Jest 관련 도구 등
   - **커밋 포인트**: `chore: 프로젝트 초기 세팅 및 의존성 추가`
 
@@ -122,10 +127,14 @@
 
 ### 8. 프론트엔드 UI 컴포넌트 (UI/UX, TDD 선택)
 
-- [ ] **기본 컴포넌트 구현**
-  - [ ] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` UI 구현
+- [ ] **Mantine 기반 기본 컴포넌트 구현**
+  - [ ] 레이아웃: `AppShell` 또는 `Header`/`Container` 구성
+  - [ ] 입력/버튼: `TextInput` + `Button`으로 TODO 추가 영역 구현
+  - [ ] 필터/검색: `SegmentedControl` 또는 `Tabs`, `TextInput`으로 필터/검색 UI 구현
+  - [ ] 리스트: `Checkbox`, `Group`, `ActionIcon`, `Card`, `Stack` 등을 사용해 TODO 항목 표시
+  - [ ] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
   - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가
-  - **커밋 포인트**: `feat(web): TODO UI 컴포넌트 기본 구현`
+  - **커밋 포인트**: `feat(web): Mantine 기반 TODO UI 컴포넌트 구현`
 
 ---
 
@@ -144,7 +153,7 @@
 - [ ] **엔드투엔드 흐름 확인**
   - [ ] 스테이지/로컬 환경에서 로그인 → TODO 생성 → 조회 → 수정/삭제 흐름 실제 테스트
   - [ ] 발견된 버그 수정
-  - [ ] `todo_app_design.md`, `todo_app_requirements.md` 최신 상태로 업데이트
+  - [ ] `design.md`, `requirements.md` 최신 상태로 업데이트
   - **커밋 포인트**: `chore: 통합 테스트 및 문서 업데이트`
 
 

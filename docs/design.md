@@ -1,13 +1,13 @@
 ## TODO 웹 앱 설계서
 
-`docs/todo_app_requirements.md`에 정리된 요구사항을 기반으로 한 설계 문서이다.
+`docs/requirements.md`에 정리된 요구사항을 기반으로 한 설계 문서이다.
 
 ---
 
 ### 1. 전체 아키텍처 개요
 
 - **아키텍처 다이어그램**
-  - `docs/todo_app_architecture.svg` 파일에 전체 구조를 SVG 다이어그램으로 정리했다.
+  - `docs/architecture.svg` 파일에 전체 구조를 SVG 다이어그램으로 정리했다.
 
 - **클라이언트(프론트엔드)**
   - React + Vite 기반 SPA
@@ -21,11 +21,20 @@
   - AWS API Gateway + Lambda (Node.js / TypeScript)
   - DynamoDB에 TODO 데이터 저장
   - AWS CDK로 인프라를 코드로 관리(IaC)
+  - 프론트엔드와 함께 **모노레포**에서 관리
 
 - **인증**
   - AWS Cognito User Pool
   - 프론트엔드에서 로그인/회원가입 UI 제공
   - 인증 후 발급된 JWT를 API 호출 시 Authorization 헤더로 전달
+
+- **리포지토리 구조(모노레포) 제안**
+  - 루트
+    - 공통 `package.json` 및 workspace 설정 (npm 또는 pnpm workspaces)
+  - `apps/web` : React + Vite + Mantine 기반 프론트엔드 앱
+  - `apps/api` : Lambda 핸들러 및 도메인 로직(백엔드) 소스
+  - `infra/cdk` : AWS CDK 스택 정의 (API Gateway, Lambda, DynamoDB, Cognito 등)
+  - 공통 유틸/타입이 필요할 경우 `packages/shared` 등으로 분리하여 재사용
 
 ---
 
