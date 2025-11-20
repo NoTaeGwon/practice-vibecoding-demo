@@ -1,0 +1,150 @@
+## TODO 웹 앱 개발 체크리스트 (TDD 중심)
+
+`docs/todo_app_design.md` 설계를 기반으로, **코어 비즈니스 로직은 TDD**로 진행하기 위한 작업 순서 체크리스트이다.  
+각 단계의 **커밋 포인트 예시**도 함께 정리했다.
+
+---
+
+### 1. 공통 환경 세팅
+
+- [ ] **Node/패키지 환경 세팅**
+  - [ ] `package.json` 생성
+  - [ ] 공통 의존성 추가: TypeScript, Jest, ts-jest, @types/jest, ESLint 등
+  - [ ] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react 등
+  - [ ] 백엔드 의존성 추가: AWS SDK(v3), Jest 관련 도구 등
+  - **커밋 포인트**: `chore: 프로젝트 초기 세팅 및 의존성 추가`
+
+- [ ] **TypeScript / Jest 설정**
+  - [ ] `tsconfig.json` 작성 (frontend/backend 공통 또는 분리)
+  - [ ] `jest.config.(ts|js)` 작성
+  - [ ] `npm test` 스크립트 추가 및 동작 확인
+  - **커밋 포인트**: `test: Jest 및 TypeScript 테스트 환경 구성`
+
+---
+
+### 2. 백엔드 도메인 로직 (순수 함수, TDD)
+
+- [ ] **Todo 타입 및 도메인 유틸 정의 (TDD)**
+  - [ ] `Todo`, `TodoCreateInput` 등 타입 정의
+  - [ ] ID 생성, 타임스탬프 생성 헬퍼에 대한 테스트 작성
+  - [ ] 테스트를 통과하도록 도메인 유틸 구현
+  - **커밋 포인트**: `feat(api): Todo 도메인 타입 및 유틸 TDD로 구현`
+
+- [ ] **서비스 계층 설계 (TDD)**
+  - [ ] `TodoRepository` 인터페이스 설계 (create, list, update, delete)
+  - [ ] `createTodo`, `listTodos`, `updateTodo`, `deleteTodo` 서비스 함수 테스트 작성
+    - [ ] 성공 케이스
+    - [ ] 잘못된 입력/에러 케이스
+  - [ ] in-memory fake 리포지토리를 사용해 서비스 함수 구현
+  - **커밋 포인트**: `feat(api): Todo 서비스 계층 TDD로 구현 (in-memory repo 기반)`
+
+---
+
+### 3. DynamoDB 리포지토리 구현 (TDD 권장)
+
+- [ ] **DynamoDB 리포지토리 구현**
+  - [ ] DynamoDB용 `TodoRepositoryDynamo` 클래스/모듈 설계
+  - [ ] DocumentClient 또는 v3 DynamoDBClient mock 기반 테스트 작성
+  - [ ] `create`, `list`, `update`, `delete`에 대한 실제 구현
+  - **커밋 포인트**: `feat(api): DynamoDB TodoRepository 구현 및 테스트`
+
+---
+
+### 4. Lambda 핸들러 레벨 (TDD)
+
+- [ ] **`createTodoHandler` (POST /todos)**
+  - [ ] 이벤트에서 JWT/`userId` 추출 로직 테스트 작성
+  - [ ] body 검증 실패 / 성공 / 서비스 에러 케이스 테스트
+  - [ ] 핸들러 구현 및 공통 응답 포맷 적용
+  - **커밋 포인트**: `feat(api): createTodo Lambda 핸들러 TDD로 구현`
+
+- [ ] **`listTodosHandler` (GET /todos)**
+  - [ ] 필터 없는 경우, `q` 있는 경우 테스트 작성
+  - [ ] 핸들러 구현 및 서비스 계층과 연동
+  - **커밋 포인트**: `feat(api): listTodos Lambda 핸들러 TDD로 구현`
+
+- [ ] **`updateTodoHandler` / `deleteTodoHandler`**
+  - [ ] Path parameter(`todoId`) 처리 테스트
+  - [ ] 존재하지 않는 TODO, 권한 문제 등 에러 케이스 테스트
+  - [ ] 핸들러 구현
+  - **커밋 포인트**: `feat(api): update/delete Todo Lambda 핸들러 TDD로 구현`
+
+---
+
+### 5. 인프라(CDK) 구성
+
+- [ ] **CDK 프로젝트 스켈레톤**
+  - [ ] CDK 초기화 및 기본 스택 생성
+  - [ ] 빈 Lambda, DynamoDB 테이블 리소스 선언
+  - **커밋 포인트**: `chore(infra): CDK 스택 초기 구조 생성`
+
+- [ ] **API Gateway / Lambda / DynamoDB / Cognito 연결**
+  - [ ] REST API 리소스(/todos) 및 메서드 정의
+  - [ ] Lambda 통합 및 적절한 IAM Role 설정
+  - [ ] Cognito User Pool 및 Authorizer 연결
+  - **커밋 포인트**: `feat(infra): API Gateway-Lambda-DynamoDB-Cognito 아키텍처 구성`
+
+---
+
+### 6. 프론트엔드 도메인 & 상태 관리 (TDD)
+
+- [ ] **Todo 타입 및 API 클라이언트 인터페이스 정의**
+  - [ ] 프론트엔드용 `Todo` 타입, 응답 타입 정의
+  - [ ] `TodoApiClient` 인터페이스 설계 (create, list, update, delete)
+  - **커밋 포인트**: `feat(web): Todo 타입 및 API 클라이언트 인터페이스 정의`
+
+- [ ] **`todoReducer` 상태/액션 TDD**
+  - [ ] 상태 구조 정의: `todos, filter, searchQuery, loading, error`
+  - [ ] 각 액션(`ADD_TODO`, `UPDATE_TODO`, `DELETE_TODO`, `SET_FILTER`, `SET_SEARCH_QUERY`, `SET_TODOS`)에 대한 리듀서 테스트 작성
+  - [ ] 리듀서 구현
+  - **커밋 포인트**: `feat(web): todoReducer TDD로 구현`
+
+- [ ] **`TodoContext` (Provider) TDD**
+  - [ ] Context 생성/Provider 동작 테스트 (초기 상태, dispatch 전달 등)
+  - [ ] Provider 구현 및 앱 루트에 연결
+  - **커밋 포인트**: `feat(web): TodoContext 및 Provider TDD로 구현`
+
+---
+
+### 7. 프론트엔드 API 연동 로직 (TDD)
+
+- [ ] **API 서비스 레이어**
+  - [ ] `fetchTodos`, `createTodo`, `updateTodo`, `deleteTodo` 함수 테스트 작성 (fetch/axios mock)
+  - [ ] 에러/성공 응답 처리 로직 구현
+  - **커밋 포인트**: `feat(web): Todo API 서비스 레이어 TDD로 구현`
+
+- [ ] **Context + API 통합**
+  - [ ] 초기 로딩, TODO 추가/삭제/완료 토글 시 API + reducer가 함께 동작하는지 RTL 테스트 작성
+  - [ ] 커스텀 훅(`useTodos`) 또는 컨테이너 컴포넌트 구현
+  - **커밋 포인트**: `feat(web): Context와 API 통합 로직 TDD로 구현`
+
+---
+
+### 8. 프론트엔드 UI 컴포넌트 (UI/UX, TDD 선택)
+
+- [ ] **기본 컴포넌트 구현**
+  - [ ] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` UI 구현
+  - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가
+  - **커밋 포인트**: `feat(web): TODO UI 컴포넌트 기본 구현`
+
+---
+
+### 9. 인증(Cognito) 프론트엔드 연동
+
+- [ ] **로그인/로그아웃 흐름**
+  - [ ] Cognito Hosted UI 또는 SDK 연동
+  - [ ] 토큰 저장/삭제, 만료 처리 로직 구현
+  - [ ] API 호출 시 `Authorization: Bearer JWT` 헤더 주입
+  - **커밋 포인트**: `feat(web): Cognito 인증 연동 및 JWT 기반 호출 구현`
+
+---
+
+### 10. 통합 테스트 및 마무리
+
+- [ ] **엔드투엔드 흐름 확인**
+  - [ ] 스테이지/로컬 환경에서 로그인 → TODO 생성 → 조회 → 수정/삭제 흐름 실제 테스트
+  - [ ] 발견된 버그 수정
+  - [ ] `todo_app_design.md`, `todo_app_requirements.md` 최신 상태로 업데이트
+  - **커밋 포인트**: `chore: 통합 테스트 및 문서 업데이트`
+
+

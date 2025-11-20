@@ -11,7 +11,8 @@
 
 - **클라이언트(프론트엔드)**
   - React + Vite 기반 SPA
-  - Tailwind CSS로 스타일링
+  - Mantine UI 라이브러리를 사용해 UI 구성
+    - Mantine의 `Button`, `TextInput`, `Checkbox`, `Card`, `Stack` 등을 활용해 TODO 화면을 구성
   - 상태 관리: React Context + useReducer
   - GitHub Pages에 정적 배포
   - GitHub Actions로 CI/CD 구성
@@ -86,12 +87,13 @@
 #### 4.1 화면 구성
 
 - **메인 페이지 (단일 페이지)**
-  - 상단 헤더: 앱 제목, 간단한 소개
-  - TODO 입력 영역: 입력 필드 + 추가 버튼
-  - 필터 영역: 전체 / 진행중 / 완료
-  - 검색 입력: 제목 기준 검색
+  - 상단 헤더: 앱 제목, 간단한 소개 (Mantine `AppShell` 또는 `Header` 활용)
+  - TODO 입력 영역: 입력 필드 + 추가 버튼 (Mantine `TextInput` + `Button`)
+  - 필터 영역: 전체 / 진행중 / 완료 (Mantine `SegmentedControl` 또는 `Tabs`)
+  - 검색 입력: 제목 기준 검색 (Mantine `TextInput`)
   - 목록 영역: TODO 리스트
-    - 체크박스(완료 토글), 제목, 삭제 버튼, (선택) 인라인 수정
+    - 체크박스(완료 토글), 제목, 삭제 버튼, (선택) 인라인 수정  
+      → Mantine `Checkbox`, `Group`, `ActionIcon`, `Card`, `Stack` 등으로 구성
 
 #### 4.2 폴더 구조(예시)
 
