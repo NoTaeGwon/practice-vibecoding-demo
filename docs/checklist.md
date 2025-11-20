@@ -7,14 +7,14 @@
 
 ### 1. 공통 환경 세팅
 
-- [ ] **모노레포 구조 및 워크스페이스 설정**
-  - [ ] 루트 `package.json` 생성 및 npm/pnpm workspaces 설정
-  - [ ] `apps/web`, `apps/api`, `infra/cdk` (필요 시 `packages/shared`) 디렉터리 생성
-  - **커밋 포인트**: `chore: 모노레포 구조 및 워크스페이스 초기 설정`
+- [x] **모노레포 구조 및 워크스페이스 설정**
+  - [x] 루트 `package.json` 생성 및 npm/pnpm workspaces 설정
+  - [x] `apps/web`, `apps/api`, `infra/cdk` (필요 시 `packages/shared`) 디렉터리 생성
+  - **커밋 포인트**: `chore: 모노레포 구조 및 워크스페이스 초기 설정` (진행 완료)
 
 - [ ] **Node/패키지 환경 세팅**
   - [ ] 루트와 각 앱에 필요한 `package.json` 생성
-  - [ ] 공통 의존성 추가: TypeScript, Jest, ts-jest, @types/jest, ESLint 등
+  - [x] 공통 의존성 추가: TypeScript, Jest, ts-jest, @types/jest, ESLint 등
   - [ ] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react, Mantine 관련 패키지 등
   - [ ] 백엔드 의존성 추가: AWS SDK(v3), Jest 관련 도구 등
   - **커밋 포인트**: `chore: 프로젝트 초기 세팅 및 의존성 추가`
