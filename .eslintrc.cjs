@@ -22,6 +22,9 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
   ],
+  rules: {
+    "react/react-in-jsx-scope": "off"
+  },
   settings: {
     react: {
       version: "detect",

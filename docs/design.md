@@ -177,7 +177,7 @@
 ### 7. 테스트 전략 (TDD 용)
 
 - **프론트엔드**
-  - Jest + React Testing Library
+  - Jest + React Testing Library (환경: `apps/web/jest.config.cjs`, `jest-environment-jsdom`)
   - 핵심 시나리오에 대해 TDD 진행
     - TODO 추가/삭제/완료 토글
     - 필터/검색 동작
@@ -190,7 +190,19 @@
 
 ---
 
-### 8. 배포 및 CI/CD
+### 8. 개발 워크플로우 및 CI/CD
+
+- **프론트엔드 품질 관리 (로컬)**
+  - 루트 `.eslintrc.cjs` 에서 TypeScript + React ESLint 규칙을 관리한다.
+  - `npm run lint:web` 으로 `apps/web/src` 전체에 대해 `eslint --fix` 를 실행한다.
+  - `npm run test:web` 으로 프론트엔드 테스트(Jest + RTL)를 실행한다.
+  - `scripts/precommit-web.cjs` + Husky `.husky/pre-commit` 훅을 사용해,
+    - `apps/web/src` 및 관련 설정 파일이 변경된 커밋에 대해서만
+    - lint → test → build(`npm run build:web`) 를 자동으로 수행해, 실패 시 커밋을 차단한다.
+
+---
+
+### 9. 배포 및 CI/CD
 
 - **프론트엔드**
   - GitHub Actions 워크플로에서 Vite 빌드 후 `dist`를 GitHub Pages에 배포
@@ -201,7 +213,7 @@
 
 ---
 
-### 9. 구현 우선순위
+### 10. 구현 우선순위
 
 1. CDK 없이도 로컬에서 TDD 가능한 **도메인 로직 및 API 스펙** 먼저 정리
 2. 프론트엔드: TODO 목록/추가/삭제/완료 토글까지의 최소 기능 구현 및 테스트
@@ -211,7 +223,7 @@
 
 ---
 
-### 10. 요청 처리 시퀀스 다이어그램 (Mermaid)
+### 11. 요청 처리 시퀀스 다이어그램 (Mermaid)
 
 #### 10.1 인증된 TODO 생성 요청 (`POST /todos`)
 

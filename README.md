@@ -43,7 +43,9 @@
   - React + Vite
   - UI: Mantine
   - 상태 관리: React Context + `useReducer`
-  - 테스트: Jest, React Testing Library
+  - 테스트: Jest, React Testing Library (`apps/web` 전용 설정)
+  - 품질 도구: ESLint
+  - Git 훅: Husky pre-commit 훅에서 `apps/web` 실행 코드 변경 시에만 lint → test → build 자동 실행
   - 배포: GitHub Pages (GitHub Actions CI/CD)
 
 - **백엔드**
@@ -86,6 +88,11 @@
 - 설계 변경 전에는 `docs/requirements.md`, `docs/design.md` 를 먼저 수정합니다.
 - 새로운 기능/단계 구현 후에는 `docs/checklist.md` 의 진행 상황을 갱신합니다.
 - 커밋 전에 문서와 코드가 현재 상태를 잘 반영하는지 확인합니다.
+ - 프론트엔드 실행 코드(`apps/web/src` 등)를 변경한 커밋에서는, pre-commit 훅이 자동으로
+   - `npm run lint:web`
+   - `npm run test:web`
+   - `npm run build:web`
+   을 순서대로 실행하며, 실패하면 커밋이 차단됩니다.
 
 이 README는 프로젝트 전반의 개요만 다루며, 구체적인 구현 순서와 세부 설계는 `docs/` 폴더를 기준으로 관리합니다.
 

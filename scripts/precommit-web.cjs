@@ -45,7 +45,7 @@ function main() {
 
   try {
     // lint --fix
-    run("npm run lint:web -- --fix");
+    run("npm run lint:web");
     // test
     run("npm run test:web");
     // build

@@ -13,17 +13,23 @@
   - **커밋 포인트**: `chore: 모노레포 구조 및 워크스페이스 초기 설정` (진행 완료)
 
 - [ ] **Node/패키지 환경 세팅**
-  - [ ] 루트와 각 앱에 필요한 `package.json` 생성
+  - [ ] 루트와 각 앱에 필요한 `package.json` 생성 (현재: 루트, `apps/web` 완료 / `apps/api`, `infra/cdk` 미구현)
   - [x] 공통 의존성 추가: TypeScript, Jest, ts-jest, @types/jest, ESLint 등
-  - [ ] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react, Mantine 관련 패키지 등
+  - [x] 프론트엔드 의존성 추가: React, React DOM, Vite, @testing-library/react, Mantine 관련 패키지 등 (`apps/web` 완료)
   - [ ] 백엔드 의존성 추가: AWS SDK(v3), Jest 관련 도구 등
   - **커밋 포인트**: `chore: 프로젝트 초기 세팅 및 의존성 추가`
 
-- [ ] **TypeScript / Jest 설정**
-  - [ ] `tsconfig.json` 작성 (frontend/backend 공통 또는 분리)
-  - [ ] `jest.config.(ts|js)` 작성
-  - [ ] `npm test` 스크립트 추가 및 동작 확인
-  - **커밋 포인트**: `test: Jest 및 TypeScript 테스트 환경 구성`
+- [x] **TypeScript / Jest 설정 (프론트엔드)**
+  - [x] `apps/web/tsconfig.json` 작성
+  - [x] `apps/web/jest.config.cjs`, `apps/web/jest.setup.cjs` 작성
+  - [x] `npm run test:web` 스크립트 추가 및 동작 확인
+  - **커밋 포인트**: `test(web): Jest 및 TypeScript 테스트 환경 구성`
+
+- [x] **프론트엔드 품질 도구 및 Git 훅 설정**
+  - [x] 루트 `.eslintrc.cjs` 설정 및 `npm run lint:web` 스크립트 추가
+  - [x] `scripts/precommit-web.cjs` 작성: `apps/web` 실행 코드 변경 시 lint → test → build 수행
+  - [x] Husky `.husky/pre-commit` 훅에서 `precommit-web.cjs` 실행
+  - **커밋 포인트**: `chore(web): ESLint/Jest 설정 및 Husky pre-commit 추가`
 
 ---
 
