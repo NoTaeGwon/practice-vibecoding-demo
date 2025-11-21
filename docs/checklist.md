@@ -140,9 +140,10 @@
   - [ ] 이후 실제 백엔드 API 호출로 교체 (동일 인터페이스 사용)
   - **커밋 포인트**: `feat(web): Todo API 서비스 레이어 TDD로 구현`
 
-- [ ] **Context + API 통합**
-  - [ ] 초기 로딩, TODO 추가/삭제/완료 토글 시 API + reducer가 함께 동작하는지 RTL 테스트 작성
-  - [ ] 커스텀 훅(`useTodos`) 또는 컨테이너 컴포넌트 구현
+- [x] **Context + API 통합**
+  - [x] 초기 로딩, TODO 추가 시 API + reducer가 함께 동작하는지 RTL 테스트 작성 (`useTodos.test.tsx`)
+  - [x] 커스텀 훅 `useTodos` 구현 (`apps/web/src/hooks/useTodos.ts`)
+  - [ ] 삭제/완료 토글 시나리오에 대한 추가 통합 테스트는 추후 보강
   - **커밋 포인트**: `feat(web): Context와 API 통합 로직 TDD로 구현`
 
 ---
