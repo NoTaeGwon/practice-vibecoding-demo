@@ -113,20 +113,21 @@
 
 ### 6. 프론트엔드 도메인 & 상태 관리 (TDD)
 
-- [ ] **Todo 타입 및 API 클라이언트 인터페이스 정의**
-  - [ ] 프론트엔드용 `Todo` 타입, 응답 타입 정의
+- [x] **Todo 타입 및 API 클라이언트 인터페이스 정의 (1차: 도메인 타입)**
+  - [x] 프론트엔드용 `Todo` 타입 정의 (`apps/web/src/types/todo.ts`)
   - [ ] `TodoApiClient` 인터페이스 설계 (create, list, update, delete)
   - **커밋 포인트**: `feat(web): Todo 타입 및 API 클라이언트 인터페이스 정의`
 
-- [ ] **`todoReducer` 상태/액션 TDD**
-  - [ ] 상태 구조 정의: `todos, filter, searchQuery, loading, error`
-  - [ ] 각 액션(`ADD_TODO`, `UPDATE_TODO`, `DELETE_TODO`, `SET_FILTER`, `SET_SEARCH_QUERY`, `SET_TODOS`)에 대한 리듀서 테스트 작성
-  - [ ] 리듀서 구현
+- [x] **`todoReducer` 상태/액션 TDD**
+  - [x] 상태 구조 정의: `todos, filter, searchQuery, loading, error` (`TodoState`)
+  - [x] 각 액션(`ADD_TODO`, `UPDATE_TODO`, `DELETE_TODO`, `SET_FILTER`, `SET_SEARCH_QUERY`, `SET_TODOS`)에 대한 리듀서 테스트 작성 (`todoReducer.test.ts`)
+  - [x] 리듀서 구현 (`todoReducer.ts`)
   - **커밋 포인트**: `feat(web): todoReducer TDD로 구현`
 
-- [ ] **`TodoContext` (Provider) TDD**
-  - [ ] Context 생성/Provider 동작 테스트 (초기 상태, dispatch 전달 등)
-  - [ ] Provider 구현 및 앱 루트에 연결
+- [x] **`TodoContext` (Provider) TDD**
+  - [x] Context 생성/Provider 동작 테스트 (초기 상태, dispatch 전달 등) (`TodoContext.test.tsx`)
+  - [x] Provider 구현 (`TodoContext.tsx`) 및 훅(`useTodoState`, `useTodoDispatch`) 제공
+  - [ ] Provider를 앱 루트에 연결 (`App`/`main`에서 사용) ← 이후 단계에서 적용
   - **커밋 포인트**: `feat(web): TodoContext 및 Provider TDD로 구현`
 
 ---
