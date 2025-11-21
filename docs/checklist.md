@@ -114,12 +114,12 @@
 ### 6. 프론트엔드 도메인 & 상태 관리 (TDD)
 
 - [x] **Todo 타입 및 API 클라이언트 인터페이스 정의 (1차: 도메인 타입)**
-  - [x] 프론트엔드용 `Todo` 타입 정의 (`apps/web/src/types/todo.ts`)
-  - [ ] `TodoApiClient` 인터페이스 설계 (create, list, update, delete)
+  - [x] 프론트엔드용 `Todo` 타입 정의 (`apps/web/src/types/todo.ts`, `priority` 필드 포함)
+  - [x] `TodoApiClient` 인터페이스 설계 및 `localTodoApi` 구현 (create, list, update, delete)
   - **커밋 포인트**: `feat(web): Todo 타입 및 API 클라이언트 인터페이스 정의`
 
 - [x] **`todoReducer` 상태/액션 TDD**
-  - [x] 상태 구조 정의: `todos, filter, searchQuery, loading, error` (`TodoState`)
+  - [x] 상태 구조 정의: `todos, filter, priorityFilter, searchQuery` (`TodoState`)
   - [x] 각 액션(`ADD_TODO`, `UPDATE_TODO`, `DELETE_TODO`, `SET_FILTER`, `SET_SEARCH_QUERY`, `SET_TODOS`)에 대한 리듀서 테스트 작성 (`todoReducer.test.ts`)
   - [x] 리듀서 구현 (`todoReducer.ts`)
   - **커밋 포인트**: `feat(web): todoReducer TDD로 구현`
@@ -152,10 +152,10 @@
 
 - [x] **Mantine 기반 기본 컴포넌트 구현**
   - [x] 레이아웃: `AppShell` + `Container` 구성 (`apps/web/src/App.tsx`)
-  - [x] 입력/버튼: `TextInput` + `Button`으로 TODO 추가 영역 구현 (`TodoInput.tsx`)
-  - [x] 필터/검색: `SegmentedControl` + `TextInput`으로 필터/검색 UI 구현 (`FilterBar.tsx`, `SearchBar.tsx`)
-  - [x] 리스트: `Checkbox`, `Group`, `ActionIcon`, `Card`, `Stack` 등을 사용해 TODO 항목 표시 (`TodoItem.tsx`, `TodoList.tsx`, `TodoPage.tsx`)
-  - [x] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
+  - [x] 입력/버튼: `TextInput` + 중요도 `Select` + `Button`으로 TODO 추가 영역 구현 (`TodoInput.tsx`)
+  - [x] 필터/검색: 상태 필터(`SegmentedControl`), 중요도 필터(`Select`), 제목 검색 `TextInput`으로 구성 (`FilterBar.tsx`, `PriorityFilterBar.tsx`, `SearchBar.tsx`)
+  - [x] 리스트: `Checkbox`, `Group`, `Badge`, `Card`, `Stack` 등을 사용해 TODO 항목 표시 및 우선순위/수정/삭제 동작 제공 (`TodoItem.tsx`, `TodoList.tsx`, `TodoPage.tsx`)
+  - [x] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `PriorityFilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
   - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가 (현재는 미구현)
   - **커밋 포인트**: `feat(web): Mantine 기반 TODO UI 컴포넌트 구현`
 

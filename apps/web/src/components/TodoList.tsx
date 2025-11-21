@@ -1,26 +1,31 @@
 import { Stack, Text } from "@mantine/core";
-import { Todo } from "../types/todo";
+import { Todo, TodoPriorityFilter } from "../types/todo";
 import { TodoFilter } from "../reducers/todoReducer";
 import { TodoItem } from "./TodoItem";
 
 interface TodoListProps {
   todos: Todo[];
   filter: TodoFilter;
+  priorityFilter: TodoPriorityFilter;
   searchQuery: string;
-  onToggleCompleted: (todo: Todo) => Promise<void> | void;
+  onUpdate: (todo: Todo) => Promise<void> | void;
   onDelete: (id: string) => Promise<void> | void;
 }
 
 export function TodoList({
   todos,
   filter,
+  priorityFilter,
   searchQuery,
-  onToggleCompleted,
+  onUpdate,
   onDelete,
 }: TodoListProps) {
   const filtered = todos.filter((todo) => {
     if (filter === "active" && todo.completed) return false;
     if (filter === "completed" && !todo.completed) return false;
+    if (priorityFilter !== "all" && todo.priority !== priorityFilter) {
+      return false;
+    }
     if (searchQuery && !todo.title.includes(searchQuery)) return false;
     return true;
   });
@@ -35,12 +40,11 @@ export function TodoList({
         <TodoItem
           key={todo.id}
           todo={todo}
-          onToggleCompleted={onToggleCompleted}
+          onUpdate={onUpdate}
           onDelete={onDelete}
         />
       ))}
     </Stack>
   );
 }
-
 

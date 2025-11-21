@@ -1,18 +1,20 @@
 import { useState, FormEvent } from "react";
-import { Button, Group, TextInput } from "@mantine/core";
+import { Button, Group, TextInput, Select } from "@mantine/core";
+import type { TodoPriority } from "../types/todo";
 
 interface TodoInputProps {
-  onAdd: (title: string) => Promise<void> | void;
+  onAdd: (title: string, priority: TodoPriority) => Promise<void> | void;
 }
 
 export function TodoInput({ onAdd }: TodoInputProps) {
   const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState<TodoPriority>("medium");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
-    await onAdd(trimmed);
+    await onAdd(trimmed, priority);
     setTitle("");
   };
 
@@ -20,13 +22,24 @@ export function TodoInput({ onAdd }: TodoInputProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Group align="flex-end" gap="xs" wrap="wrap">
+      <Group align="flex-end" gap="xs" wrap="nowrap">
         <TextInput
-          label="할 일 추가"
-          placeholder="예: 공부하기"
+          placeholder="할 일을 입력하세요"
           value={title}
           onChange={(event) => setTitle(event.currentTarget.value)}
           flex={1}
+        />
+        <Select
+          aria-label="중요도"
+          value={priority}
+          onChange={(value) => setPriority((value as TodoPriority) ?? "medium")}
+          data={[
+            { label: "낮음", value: "low" },
+            { label: "보통", value: "medium" },
+            { label: "높음", value: "high" },
+          ]}
+          size="sm"
+          w={160}
         />
         <Button
           type="submit"

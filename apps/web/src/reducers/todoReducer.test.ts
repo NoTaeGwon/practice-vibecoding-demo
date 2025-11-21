@@ -73,6 +73,14 @@ describe("todoReducer", () => {
     });
     expect(next.searchQuery).toBe("테스트");
   });
+
+  it("SET_PRIORITY_FILTER: 중요도 필터를 변경한다", () => {
+    const next = todoReducer(initialTodoState, {
+      type: "SET_PRIORITY_FILTER",
+      payload: { priority: "high" },
+    });
+    expect(next.priorityFilter).toBe("high");
+  });
 });
 
 

@@ -24,6 +24,7 @@ describe("useTodos (Context + API 통합)", () => {
         id: "1",
         title: "불러온 TODO",
         completed: false,
+        priority: "medium",
         createdAt: "now",
         updatedAt: "now",
       },
@@ -48,6 +49,7 @@ describe("useTodos (Context + API 통합)", () => {
       id: "1",
       title: "새 할 일",
       completed: false,
+      priority: "high",
       createdAt: "now",
       updatedAt: "now",
     };
@@ -56,13 +58,12 @@ describe("useTodos (Context + API 통합)", () => {
     const { result } = renderHook(() => useTodos(), { wrapper });
 
     await act(async () => {
-      await result.current.addTodo("새 할 일");
+      await result.current.addTodo("새 할 일", "high");
     });
 
-    expect(mockedApi.createTodo).toHaveBeenCalledWith("새 할 일");
+    expect(mockedApi.createTodo).toHaveBeenCalledWith("새 할 일", "high");
     expect(result.current.state.todos).toHaveLength(1);
     expect(result.current.state.todos[0].title).toBe("새 할 일");
   });
 });
-
 

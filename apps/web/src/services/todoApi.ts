@@ -1,19 +1,33 @@
-import { Todo } from "../types/todo";
+import { Todo, TodoPriority } from "../types/todo";
 
 export const STORAGE_KEY = "todo-app.todos";
 
 export interface TodoApiClient {
   fetchTodos(): Promise<Todo[]>;
-  createTodo(title: string): Promise<Todo>;
+  createTodo(title: string, priority: TodoPriority): Promise<Todo>;
   updateTodo(todo: Todo): Promise<Todo>;
   deleteTodo(id: string): Promise<void>;
+}
+
+const DEFAULT_PRIORITY: TodoPriority = "medium";
+
+function normalizeTodo(raw: Partial<Todo>): Todo {
+  return {
+    id: raw.id,
+    title: raw.title,
+    completed: Boolean(raw.completed),
+    priority: (raw.priority as TodoPriority) ?? DEFAULT_PRIORITY,
+    createdAt: raw.createdAt,
+    updatedAt: raw.updatedAt,
+  };
 }
 
 function readTodos(): Todo[] {
   const raw = window.localStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
   try {
-    return JSON.parse(raw) as Todo[];
+    const parsed = JSON.parse(raw) as Partial<Todo>[];
+    return parsed.map(normalizeTodo);
   } catch {
     return [];
   }
@@ -23,12 +37,13 @@ function writeTodos(todos: Todo[]): void {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
 
-function createTodoObject(title: string): Todo {
+function createTodoObject(title: string, priority: TodoPriority): Todo {
   const now = new Date().toISOString();
   return {
     id: crypto.randomUUID(),
     title,
     completed: false,
+    priority,
     createdAt: now,
     updatedAt: now,
   };
@@ -39,9 +54,9 @@ export const localTodoApi: TodoApiClient = {
     return readTodos();
   },
 
-  async createTodo(title: string) {
+  async createTodo(title: string, priority: TodoPriority) {
     const todos = readTodos();
-    const todo = createTodoObject(title);
+    const todo = createTodoObject(title, priority);
     todos.push(todo);
     writeTodos(todos);
     return todo;
@@ -64,5 +79,4 @@ export const localTodoApi: TodoApiClient = {
     writeTodos(todos);
   },
 };
-
 

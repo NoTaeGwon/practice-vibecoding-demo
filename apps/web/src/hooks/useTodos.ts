@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useTodoDispatch, useTodoState } from "../context/TodoContext";
 import { localTodoApi } from "../services/todoApi";
-import { Todo, } from "../types/todo";
+import { Todo, TodoPriority, TodoPriorityFilter } from "../types/todo";
 import { TodoFilter } from "../reducers/todoReducer";
 
 export function useTodos() {
@@ -14,8 +14,8 @@ export function useTodos() {
   }, [dispatch]);
 
   const addTodo = useCallback(
-    async (title: string) => {
-      const created = await localTodoApi.createTodo(title);
+    async (title: string, priority: TodoPriority) => {
+      const created = await localTodoApi.createTodo(title, priority);
       dispatch({ type: "ADD_TODO", payload: { todo: created } });
     },
     [dispatch]
@@ -33,6 +33,13 @@ export function useTodos() {
     async (id: string) => {
       await localTodoApi.deleteTodo(id);
       dispatch({ type: "DELETE_TODO", payload: { id } });
+    },
+    [dispatch]
+  );
+
+  const setPriorityFilter = useCallback(
+    (priority: TodoPriorityFilter) => {
+      dispatch({ type: "SET_PRIORITY_FILTER", payload: { priority } });
     },
     [dispatch]
   );
@@ -58,8 +65,8 @@ export function useTodos() {
     updateTodo,
     deleteTodo,
     setFilter,
+    setPriorityFilter,
     setSearchQuery,
   };
 }
-
 

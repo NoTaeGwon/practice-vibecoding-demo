@@ -3,6 +3,7 @@ import { Card, Stack, Group, Text } from "@mantine/core";
 import { useTodos } from "../hooks/useTodos";
 import { TodoInput } from "../components/TodoInput";
 import { FilterBar } from "../components/FilterBar";
+import { PriorityFilterBar } from "../components/PriorityFilterBar";
 import { SearchBar } from "../components/SearchBar";
 import { TodoList } from "../components/TodoList";
 
@@ -14,6 +15,7 @@ export function TodoPage() {
     updateTodo,
     deleteTodo,
     setFilter,
+    setPriorityFilter,
     setSearchQuery,
   } = useTodos();
 
@@ -36,15 +38,22 @@ export function TodoPage() {
           gap={{ base: "xs", sm: "md" }}
           wrap="wrap"
         >
-          <FilterBar value={state.filter} onChange={setFilter} />
+          <Group gap="xs" wrap="wrap">
+            <FilterBar value={state.filter} onChange={setFilter} />
+            <PriorityFilterBar
+              value={state.priorityFilter}
+              onChange={setPriorityFilter}
+            />
+          </Group>
           <SearchBar value={state.searchQuery} onChange={setSearchQuery} />
         </Group>
 
         <TodoList
           todos={state.todos}
           filter={state.filter}
+          priorityFilter={state.priorityFilter}
           searchQuery={state.searchQuery}
-          onToggleCompleted={updateTodo}
+          onUpdate={updateTodo}
           onDelete={deleteTodo}
         />
 

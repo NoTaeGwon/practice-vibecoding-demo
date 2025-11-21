@@ -1,10 +1,11 @@
-import { Todo } from "../types/todo";
+import { Todo, TodoPriorityFilter } from "../types/todo";
 
 export type TodoFilter = "all" | "active" | "completed";
 
 export interface TodoState {
   todos: Todo[];
   filter: TodoFilter;
+  priorityFilter: TodoPriorityFilter;
   searchQuery: string;
 }
 
@@ -14,11 +15,16 @@ export type TodoAction =
   | { type: "UPDATE_TODO"; payload: { todo: Todo } }
   | { type: "DELETE_TODO"; payload: { id: string } }
   | { type: "SET_FILTER"; payload: { filter: TodoFilter } }
+  | {
+      type: "SET_PRIORITY_FILTER";
+      payload: { priority: TodoPriorityFilter };
+    }
   | { type: "SET_SEARCH_QUERY"; payload: { searchQuery: string } };
 
 export const initialTodoState: TodoState = {
   todos: [],
   filter: "all",
+  priorityFilter: "all",
   searchQuery: "",
 };
 
@@ -58,6 +64,11 @@ export function todoReducer(
       return {
         ...state,
         searchQuery: action.payload.searchQuery,
+      };
+    case "SET_PRIORITY_FILTER":
+      return {
+        ...state,
+        priorityFilter: action.payload.priority,
       };
     default:
       return state;
