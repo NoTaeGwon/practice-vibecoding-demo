@@ -1,4 +1,13 @@
 #!/usr/bin/env sh
+
+echo "[husky] pre-commit 시작"
+
+echo "[husky] 스테이징된 파일 목록:"
+git diff --cached --name-only | sed 's/^/  - /'
+
+echo "[husky] 프론트엔드(precommit-web.cjs) 검사 실행"
 node scripts/precommit-web.cjs
+
+echo "[husky] pre-commit 종료"
 
 
