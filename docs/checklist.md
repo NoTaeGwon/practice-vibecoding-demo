@@ -134,9 +134,10 @@
 
 ### 7. 프론트엔드 API 연동 로직 (TDD)
 
-- [ ] **API 서비스 레이어**
-  - [ ] `fetchTodos`, `createTodo`, `updateTodo`, `deleteTodo` 함수 테스트 작성 (fetch/axios mock)
-  - [ ] 에러/성공 응답 처리 로직 구현
+- [x] **API 서비스 레이어 (1차: localStorage/mock 기반)**
+  - [x] `TodoApiClient` 인터페이스 및 `localTodoApi` 구현 (`apps/web/src/services/todoApi.ts`)
+  - [x] `fetchTodos`, `createTodo`, `updateTodo`, `deleteTodo` 함수 테스트 작성 및 통과 (`todoApi.test.ts`)
+  - [ ] 이후 실제 백엔드 API 호출로 교체 (동일 인터페이스 사용)
   - **커밋 포인트**: `feat(web): Todo API 서비스 레이어 TDD로 구현`
 
 - [ ] **Context + API 통합**
