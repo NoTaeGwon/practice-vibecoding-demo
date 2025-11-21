@@ -150,13 +150,13 @@
 
 ### 8. 프론트엔드 UI 컴포넌트 (UI/UX, TDD 선택)
 
-- [ ] **Mantine 기반 기본 컴포넌트 구현**
-  - [ ] 레이아웃: `AppShell` 또는 `Header`/`Container` 구성
-  - [ ] 입력/버튼: `TextInput` + `Button`으로 TODO 추가 영역 구현
-  - [ ] 필터/검색: `SegmentedControl` 또는 `Tabs`, `TextInput`으로 필터/검색 UI 구현
-  - [ ] 리스트: `Checkbox`, `Group`, `ActionIcon`, `Card`, `Stack` 등을 사용해 TODO 항목 표시
-  - [ ] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
-  - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가
+- [x] **Mantine 기반 기본 컴포넌트 구현**
+  - [x] 레이아웃: `AppShell` + `Container` 구성 (`apps/web/src/App.tsx`)
+  - [x] 입력/버튼: `TextInput` + `Button`으로 TODO 추가 영역 구현 (`TodoInput.tsx`)
+  - [x] 필터/검색: `SegmentedControl` + `TextInput`으로 필터/검색 UI 구현 (`FilterBar.tsx`, `SearchBar.tsx`)
+  - [x] 리스트: `Checkbox`, `Group`, `ActionIcon`, `Card`, `Stack` 등을 사용해 TODO 항목 표시 (`TodoItem.tsx`, `TodoList.tsx`, `TodoPage.tsx`)
+  - [x] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
+  - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가 (현재는 미구현)
   - **커밋 포인트**: `feat(web): Mantine 기반 TODO UI 컴포넌트 구현`
 
 ---

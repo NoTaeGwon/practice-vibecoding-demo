@@ -1,4 +1,5 @@
-import { AppShell, Container, Title, Text } from "@mantine/core";
+import { AppShell, Container, Title } from "@mantine/core";
+import { TodoPage } from "./pages/TodoPage";
 
 function App() {
   return (
@@ -10,10 +11,7 @@ function App() {
       </AppShell.Header>
       <AppShell.Main>
         <Container size="sm">
-          <Text c="dimmed">
-            프론트엔드 환경 설정이 완료되었습니다. 이후 체크리스트에 따라 TODO 기능과
-            백엔드 연동을 구현합니다.
-          </Text>
+          <TodoPage />
         </Container>
       </AppShell.Main>
     </AppShell>
