@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+echo "[husky] pre-push 시작"
+
+echo "[husky] 웹 E2E 테스트 실행 (Playwright)"
+npm run test:e2e -w apps/web
+
+echo "[husky] pre-push 종료"
+
+
