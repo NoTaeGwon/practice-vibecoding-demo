@@ -64,9 +64,15 @@ export function TodoItem({ todo, onUpdate, onDelete }: TodoItemProps) {
   };
 
   return (
-    <Group justify="space-between" align="flex-start">
+    <Group
+      justify="space-between"
+      align="flex-start"
+      data-testid="todo-item"
+      data-todo-id={todo.id}
+    >
       <Group align="flex-start" gap="xs">
         <Checkbox
+          data-testid="todo-complete-toggle"
           checked={todo.completed}
           onChange={handleToggle}
           mt={isEditing ? "sm" : 0}
@@ -96,6 +102,7 @@ export function TodoItem({ todo, onUpdate, onDelete }: TodoItemProps) {
         ) : (
           <Group gap="xs">
             <Text
+              data-testid="todo-title"
               style={{
                 textDecoration: todo.completed ? "line-through" : "none",
                 color: todo.completed ? "gray" : undefined,
@@ -103,7 +110,12 @@ export function TodoItem({ todo, onUpdate, onDelete }: TodoItemProps) {
             >
               {todo.title}
             </Text>
-            <Badge color={priorityColor[todo.priority]} size="sm" variant="light">
+            <Badge
+              data-testid="todo-priority-badge"
+              color={priorityColor[todo.priority]}
+              size="sm"
+              variant="light"
+            >
               {priorityLabel[todo.priority]}
             </Badge>
           </Group>
@@ -113,6 +125,7 @@ export function TodoItem({ todo, onUpdate, onDelete }: TodoItemProps) {
         {isEditing ? (
           <>
             <Button
+              data-testid="todo-edit-button"
               variant="subtle"
               size="xs"
               onClick={handleCancel}
@@ -121,6 +134,7 @@ export function TodoItem({ todo, onUpdate, onDelete }: TodoItemProps) {
               취소
             </Button>
             <Button
+              data-testid="todo-delete-button"
               variant="subtle"
               size="xs"
               onClick={handleSave}

@@ -12,6 +12,7 @@ export function PriorityFilterBar({
 }: PriorityFilterBarProps) {
   return (
     <Select
+      data-testid="priority-filter-select"
       aria-label="중요도 필터"
       value={value}
       onChange={(v) => onChange((v as TodoPriorityFilter) ?? "all")}

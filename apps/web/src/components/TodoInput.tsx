@@ -24,12 +24,14 @@ export function TodoInput({ onAdd }: TodoInputProps) {
     <form onSubmit={handleSubmit}>
       <Group align="flex-end" gap="xs" wrap="nowrap">
         <TextInput
+          data-testid="todo-input"
           placeholder="할 일을 입력하세요"
           value={title}
           onChange={(event) => setTitle(event.currentTarget.value)}
           flex={1}
         />
         <Select
+          data-testid="priority-select"
           aria-label="중요도"
           value={priority}
           onChange={(value) => setPriority((value as TodoPriority) ?? "medium")}
@@ -42,6 +44,7 @@ export function TodoInput({ onAdd }: TodoInputProps) {
           w={160}
         />
         <Button
+          data-testid="add-todo-button"
           type="submit"
           disabled={isEmpty}
           mt={{ base: "xs", sm: 0 }}

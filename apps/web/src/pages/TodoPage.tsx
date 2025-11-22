@@ -57,7 +57,7 @@ export function TodoPage() {
           onDelete={deleteTodo}
         />
 
-        <Text c="dimmed" size="sm">
+        <Text c="dimmed" size="sm" data-testid="todo-count-text">
           총 {state.todos.length}개의 할 일이 있습니다.
         </Text>
       </Stack>

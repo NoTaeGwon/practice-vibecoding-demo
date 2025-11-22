@@ -45,6 +45,12 @@
   - [x] Husky `.husky/pre-commit` 훅에서 `precommit-web.cjs` 실행
   - **커밋 포인트**: `chore(web): ESLint/Jest 설정 및 Husky pre-commit 추가`
 
+- [x] **프론트엔드 E2E 테스트 환경 (Playwright)**
+  - [x] `@playwright/test` 추가 및 `apps/web/playwright.config.ts` 설정
+  - [x] 기본 E2E 테스트(`tests/e2e/todo.spec.ts`) 작성: TODO 생성, 우선순위 선택, 우선순위 필터링 시나리오 검증
+  - [x] `npm run test:e2e` 스크립트 추가 및 Vite dev 서버와 연동 확인
+  - **커밋 포인트**: `test(web): Playwright 기반 E2E 테스트 추가`
+
 ---
 
 ### 2. 백엔드 도메인 로직 (순수 함수, TDD)
@@ -156,7 +162,7 @@
   - [x] 필터/검색: 상태 필터(`SegmentedControl`), 중요도 필터(`Select`), 제목 검색 `TextInput`으로 구성 (`FilterBar.tsx`, `PriorityFilterBar.tsx`, `SearchBar.tsx`)
   - [x] 리스트: `Checkbox`, `Group`, `Badge`, `Card`, `Stack` 등을 사용해 TODO 항목 표시 및 우선순위/수정/삭제 동작 제공 (`TodoItem.tsx`, `TodoList.tsx`, `TodoPage.tsx`)
   - [x] `TodoInput`, `TodoList`, `TodoItem`, `FilterBar`, `PriorityFilterBar`, `SearchBar`, `TodoPage` 컴포넌트로 분리
-  - [ ] 필요 시 간단한 렌더링/상호작용 테스트 추가 (현재는 미구현)
+  - [x] 필요 시 간단한 렌더링/상호작용 테스트 추가 (Playwright E2E로 TODO 생성/우선순위/필터링 시나리오 검증)
   - **커밋 포인트**: `feat(web): Mantine 기반 TODO UI 컴포넌트 구현`
 
 ---

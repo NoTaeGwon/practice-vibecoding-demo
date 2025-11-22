@@ -31,11 +31,15 @@ export function TodoList({
   });
 
   if (filtered.length === 0) {
-    return <Text c="dimmed">표시할 할 일이 없습니다.</Text>;
+    return (
+      <Text c="dimmed" data-testid="todo-empty-message">
+        표시할 할 일이 없습니다.
+      </Text>
+    );
   }
 
   return (
-    <Stack gap="xs">
+    <Stack gap="xs" data-testid="todo-list">
       {filtered.map((todo) => (
         <TodoItem
           key={todo.id}
