@@ -60,6 +60,7 @@
   - [x] Vite `base` 경로를 GitHub Pages 리포지토리 경로(`/practice-vibecoding-demo/`)로 설정
   - [x] GitHub Pages 배포 워크플로우 추가: `.github/workflows/deploy-web.yml`
   - [x] `main` 브랜치에 push 시 `apps/web/dist`를 GitHub Pages로 자동 배포
+  - [x] GitHub Actions 실행 로그와 실제 배포 URL(`https://NoTaeGwon.github.io/practice-vibecoding-demo/`)에서 동작 확인
   - **커밋 포인트**: `ci(web): GitHub Pages 배포 워크플로우 추가`
 
 ---
