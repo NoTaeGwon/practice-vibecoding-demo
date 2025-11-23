@@ -56,6 +56,12 @@
   - [x] `push`/`pull_request` 시 `lint:web` → `test:web` → `build:web` → `apps/web` Playwright E2E 테스트 자동 실행
   - **커밋 포인트**: `ci(web): GitHub Actions 기반 프론트엔드 CI 파이프라인 추가`
 
+- [x] **프론트엔드 GitHub Pages 배포 (GitHub Actions)**
+  - [x] Vite `base` 경로를 GitHub Pages 리포지토리 경로(`/practice-vibecoding-demo/`)로 설정
+  - [x] GitHub Pages 배포 워크플로우 추가: `.github/workflows/deploy-web.yml`
+  - [x] `main` 브랜치에 push 시 `apps/web/dist`를 GitHub Pages로 자동 배포
+  - **커밋 포인트**: `ci(web): GitHub Pages 배포 워크플로우 추가`
+
 ---
 
 ### 2. 백엔드 도메인 로직 (순수 함수, TDD)

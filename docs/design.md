@@ -220,7 +220,14 @@
 ### 9. 배포 및 CI/CD
 
 - **프론트엔드**
-  - GitHub Actions 워크플로에서 Vite 빌드 후 `dist`를 GitHub Pages에 배포
+  - Vite 설정에서 GitHub Pages 배포 경로를 명시
+    - `apps/web/vite.config.ts` 에서 `base: "/practice-vibecoding-demo/"` 설정
+    - 실제 배포 주소: `https://<GitHub-username>.github.io/practice-vibecoding-demo/`
+  - GitHub Actions 워크플로에서 Vite 빌드 후 `apps/web/dist`를 GitHub Pages에 배포
+    - 워크플로우 파일: `.github/workflows/deploy-web.yml`
+    - `push`(main) 시 동작
+    - `npm ci` → `npm run build:web` 실행 후 `apps/web/dist`를 Pages 아티팩트로 업로드
+    - `actions/deploy-pages` 를 통해 GitHub Pages 환경에 배포
 
 - **백엔드/인프라**
   - CDK 프로젝트로 스택 정의 (API Gateway, Lambda, DynamoDB, Cognito)
