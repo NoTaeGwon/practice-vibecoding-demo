@@ -51,6 +51,11 @@
   - [x] `npm run test:e2e` 스크립트 추가 및 Vite dev 서버와 연동 확인
   - **커밋 포인트**: `test(web): Playwright 기반 E2E 테스트 추가`
 
+- [x] **프론트엔드 CI (GitHub Actions)**
+  - [x] GitHub Actions 워크플로우 추가: `.github/workflows/frontend-ci.yml`
+  - [x] `push`/`pull_request` 시 `lint:web` → `test:web` → `build:web` → `apps/web` Playwright E2E 테스트 자동 실행
+  - **커밋 포인트**: `ci(web): GitHub Actions 기반 프론트엔드 CI 파이프라인 추가`
+
 ---
 
 ### 2. 백엔드 도메인 로직 (순수 함수, TDD)
@@ -133,7 +138,7 @@
 - [x] **`TodoContext` (Provider) TDD**
   - [x] Context 생성/Provider 동작 테스트 (초기 상태, dispatch 전달 등) (`TodoContext.test.tsx`)
   - [x] Provider 구현 (`TodoContext.tsx`) 및 훅(`useTodoState`, `useTodoDispatch`) 제공
-  - [ ] Provider를 앱 루트에 연결 (`App`/`main`에서 사용) ← 이후 단계에서 적용
+  - [x] Provider를 앱 루트에 연결 (`App`/`main`에서 사용)
   - **커밋 포인트**: `feat(web): TodoContext 및 Provider TDD로 구현`
 
 ---

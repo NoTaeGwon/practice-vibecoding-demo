@@ -200,6 +200,21 @@
     - `apps/web/src` 및 관련 설정 파일이 변경된 커밋에 대해서만
     - lint → test → build(`npm run build:web`) 를 자동으로 수행해, 실패 시 커밋을 차단한다.
 
+- **프론트엔드 CI (GitHub Actions)**
+  - 워크플로우 파일: `.github/workflows/frontend-ci.yml`
+  - 트리거: `main` 브랜치 대상 `push`, `pull_request`
+  - 공통 단계:
+    - `actions/checkout` 으로 코드 체크아웃
+    - `actions/setup-node` 로 Node.js 22 환경 + npm 캐시 설정
+    - `npm ci` 로 의존성 설치
+  - 웹 앱 관련 단계:
+    - `npm run lint:web`
+    - `npm run test:web`
+    - `npm run build:web`
+    - `apps/web` 디렉터리에서 Playwright E2E 테스트 실행
+      - `npx playwright install --with-deps`
+      - `npm run test:e2e`
+
 ---
 
 ### 9. 배포 및 CI/CD

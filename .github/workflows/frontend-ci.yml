@@ -1,0 +1,42 @@
+name: Web Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  web-ci:
+    name: Lint, Test, Build, E2E (web)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (web)
+        run: npm run lint:web
+
+      - name: Unit/Integration Tests (web)
+        run: npm run test:web
+
+      - name: Build (web)
+        run: npm run build:web
+
+      - name: E2E Tests (Playwright - web)
+        working-directory: apps/web
+        run: npx playwright install --with-deps && npm run test:e2e
+
+
