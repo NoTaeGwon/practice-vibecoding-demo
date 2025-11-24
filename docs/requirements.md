@@ -86,7 +86,100 @@
    - 빌드 도구: Vite
 ---
 
-### 6. 화면(페이지) 구성 초안
+### 6. 백엔드 요건 정의
+
+#### 6.1 아키텍처 개요
+- **서버리스 아키텍처**: AWS 서버리스 서비스를 사용하여 백엔드를 구성한다.
+  - **API Gateway**: REST API 엔드포인트 제공 및 요청 라우팅
+  - **AWS Lambda**: 비즈니스 로직 실행 (Node.js/TypeScript)
+  - **DynamoDB**: TODO 데이터 영구 저장
+  - **AWS Cognito**: 인증 및 권한 제어 (비로그인 사용자 차단용)
+
+#### 6.2 API 엔드포인트 정의
+- **POST /todos**: TODO 항목 생성
+  - 요청 본문: `{ title: string, priority?: "low" | "medium" | "high", completed?: boolean }`
+  - 응답: 생성된 TODO 객체 (ID, 생성 시간 포함)
+- **GET /todos**: TODO 목록 조회
+  - 쿼리 파라미터: `?q=<검색어>` (제목 검색), `?filter=<all|active|completed>`, `?priority=<all|low|medium|high>`
+  - 응답: TODO 배열
+- **PUT /todos/{todoId}**: TODO 항목 수정
+  - 요청 본문: `{ title?: string, priority?: "low" | "medium" | "high", completed?: boolean }`
+  - 응답: 수정된 TODO 객체
+- **DELETE /todos/{todoId}**: TODO 항목 삭제
+  - 응답: 삭제 성공 메시지
+
+#### 6.3 인증 및 권한 제어
+- **AWS Cognito 사용 목적**
+  - 학습용 프로젝트이므로 회원가입/로그인 기능은 구현하지 않음
+  - **비로그인 사용자의 API 접근을 차단**하기 위해 Cognito Authorizer를 사용
+  - API Gateway에서 Cognito User Pool Authorizer를 설정하여, 유효한 JWT 토큰이 없는 요청은 401 Unauthorized 응답
+- **권한 정책**
+  - 로그인한 사용자만 자신의 TODO 데이터에 접근 가능
+  - TODO 데이터는 사용자별로 분리 저장 (DynamoDB 파티션 키에 `userId` 포함)
+  - 비로그인 사용자는 모든 API 엔드포인트 접근 불가
+
+#### 6.4 데이터 저장 (DynamoDB)
+- **테이블 구조**
+  - 테이블명: `Todos` (또는 환경별 prefix 포함)
+  - 파티션 키: `userId` (Cognito User ID)
+  - 정렬 키: `todoId` (UUID)
+  - 속성: `title`, `priority`, `completed`, `createdAt`, `updatedAt`
+- **데이터 일관성**
+  - 사용자별로 TODO 목록을 조회/수정/삭제
+  - DynamoDB의 조건부 쓰기(Conditional Writes)를 활용하여 데이터 무결성 보장
+
+#### 6.5 CI/CD (GitHub Actions)
+- **CI 파이프라인**
+  - `push` 및 `pull_request` 이벤트 시 자동 실행
+  - 단계:
+    1. 코드 린팅 (`npm run lint:api`)
+    2. 단위 테스트 실행 (`npm run test:api`)
+    3. 빌드 검증 (`npm run build:api`)
+- **CD 파이프라인**
+  - `main` 브랜치에 `push` 시 자동 배포
+  - 단계:
+    1. CDK 스택 빌드 및 배포 (`cdk deploy`)
+    2. 배포 후 통합 테스트 (선택 사항)
+
+#### 6.6 Infrastructure as Code (IaC)
+- **AWS CDK (TypeScript) 사용**
+  - `infra/cdk` 디렉터리에 CDK 스택 정의
+  - 리소스 구성:
+    - API Gateway (REST API)
+    - Lambda 함수들 (각 엔드포인트별 핸들러)
+    - DynamoDB 테이블
+    - Cognito User Pool 및 Authorizer
+    - IAM 역할 및 정책
+  - 환경별 스택 분리 가능 (예: `dev`, `prod`)
+- **배포 방식**
+  - 로컬에서 `cdk deploy` 명령으로 배포
+  - 또는 GitHub Actions를 통한 자동 배포
+
+#### 6.7 에러 처리 및 응답 형식
+- **공통 응답 형식**
+  - 성공: `{ success: true, data: <응답 데이터> }`
+  - 에러: `{ success: false, error: { code: string, message: string } }`
+- **HTTP 상태 코드**
+  - `200 OK`: 성공
+  - `201 Created`: 리소스 생성 성공
+  - `400 Bad Request`: 잘못된 요청 (유효성 검사 실패)
+  - `401 Unauthorized`: 인증 실패 (Cognito 토큰 없음/만료)
+  - `403 Forbidden`: 권한 없음
+  - `404 Not Found`: 리소스 없음
+  - `500 Internal Server Error`: 서버 오류
+
+#### 6.8 보안 고려사항
+- **CORS 설정**
+  - API Gateway에서 프론트엔드 도메인(GitHub Pages)에 대한 CORS 허용
+- **HTTPS 강제**
+  - API Gateway는 기본적으로 HTTPS만 지원
+- **입력 검증**
+  - Lambda 핸들러에서 요청 본문 및 파라미터 유효성 검사
+  - SQL Injection 등은 DynamoDB 사용으로 자동 방지
+
+---
+
+### 7. 화면(페이지) 구성 초안
 
 - **화면 1: TODO 메인 화면**
   - 상단: 앱 제목, 간단한 설명(선택).
@@ -99,9 +192,9 @@
 
 ---
 
-### 7. 요건 정의를 위해 확인해야 할 질문들
+### 8. 요건 정의를 위해 확인해야 할 질문들
 
-#### 7.1 비즈니스/목적 관련 질문
+#### 8.1 비즈니스/목적 관련 질문
 - 이 TODO 앱은 **어떤 상황에서 데모**로 사용될 예정인가요? 
 A: 개발 연습
 - 데모의 **핵심 포인트**는 무엇인가요? (깔끔한 UI, 코드 구조, 테스트, 성능 등) 
@@ -109,7 +202,7 @@ A: 테스트트
 - 이 앱을 **실제 사용자도 쓰게 할 계획**이 있나요, 아니면 데모 전용인가요? 
 A: 잘 만들어지면 그때 되서 생각
 
-#### 7.2 사용자/도메인 관련 질문
+#### 8.2 사용자/도메인 관련 질문
 - 예상하는 **사용자 수**나 **동시 접속 규모**가 있나요?
 A: 10명 목표 
 - 사용자는 **로그인 없이** 사용할 수 있나요, 아니면 간단한 **계정/인증**이 필요할까요?
@@ -117,7 +210,7 @@ A: AWS Cognito로 로그인/회원가입 구현현
 - 다국어 지원(예: 한국어/영어)을 고려해야 하나요?
 A: 고려 X
 
-#### 7.3 기능 관련 질문
+#### 8.3 기능 관련 질문
 - TODO 항목에 **어떤 속성**이 꼭 필요할까요?
   - 제목 외에 설명, 태그, 마감일, 우선순위, 첨부파일 등이 필요한가요?
 A: 필요 없음
@@ -132,7 +225,7 @@ A: 제목만
 - 삭제된 TODO를 복구하는 **휴지통/Undo** 기능이 필요한가요?
 A: 필요 없음
 
-#### 7.4 UX/UI 관련 질문
+#### 8.4 UX/UI 관련 질문
 - 우선 목표는 **모바일 최적화**, **데스크톱 최적화**, **양쪽 모두** 중 무엇인가요?
 A: 모바일 최적화
 - **다크 모드** 또는 테마 변경 기능이 필요한가요?
@@ -142,7 +235,7 @@ A: 필요 없음
 - 접근성(Accessibility: 키보드 탐색, 스크린리더 친화 등)을 어느 정도 고려해야 할까요?
 A: 필요 없음
 
-#### 7.5 기술/아키텍처 관련 질문
+#### 8.5 기술/아키텍처 관련 질문
 - 프론트엔드는 **어떤 프레임워크/라이브러리**를 선호하시나요? (React, Vue, Svelte, Next 등)
 A: React
 - 상태 관리는 **간단한 컴포넌트 상태**로 충분한가요, 아니면 Redux/Zustand/Recoil 등 별도 상태 관리가 필요할까요?
@@ -152,7 +245,7 @@ A: React
 - 배포는 **어디에** 할 계획인가요? (예: Vercel, Netlify, GitHub Pages, 사내 서버 등)
 A: AWS에 배포, 프론트엔드와 CI/CD는 Github Pages와 Github Actions 사용
 
-#### 7.6 보안/권한 관련 질문
+#### 8.6 보안/권한 관련 질문
 - 로그인 기능이 있다면, **인증 방식**(이메일/비밀번호, 소셜 로그인 등)을 어떻게 할 계획인가요?
 A: AWS Cogito로 로그인/회원가입 구현현
 - TODO 데이터는 **사용자별로 분리**되어야 하나요?
@@ -160,7 +253,7 @@ A: 각자 개인의 TODO 목록록
 - HTTPS, CORS, 기본적인 보안 헤더 등은 어느 정도까지 고려하면 될까요? (데모 수준 vs 실제 서비스 수준)
 A: 데모 수준
 
-#### 7.7 운영/유지보수 관련 질문
+#### 8.7 운영/유지보수 관련 질문
 - 이 앱은 **일회성 데모**인가요, 아니면 계속 유지/개선할 계획인가요?
 A: 추후 개선선
 - 향후 기능 확장을 염두에 두고 **확장 가능한 구조**로 설계해야 하나요?
@@ -169,7 +262,7 @@ A: 필요 없음음
 A: 필요 없음
 ---
 
-### 8. 다음 단계 제안
+### 9. 다음 단계 제안
 - 위 질문들에 대해 답을 정리한 후:
   1. **요구사항 확정본**을 이 문서에 반영한다.
   2. 화면 와이어프레임(또는 간단한 스케치)을 만든다.
