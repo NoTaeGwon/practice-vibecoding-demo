@@ -51,17 +51,15 @@
   - [x] `npm run test:e2e` 스크립트 추가 및 Vite dev 서버와 연동 확인
   - **커밋 포인트**: `test(web): Playwright 기반 E2E 테스트 추가`
 
-- [x] **프론트엔드 CI (GitHub Actions)**
-  - [x] GitHub Actions 워크플로우 추가: `.github/workflows/frontend-ci.yml`
-  - [x] `push`/`pull_request` 시 `lint:web` → `test:web` → `build:web` → `apps/web` Playwright E2E 테스트 자동 실행
-  - **커밋 포인트**: `ci(web): GitHub Actions 기반 프론트엔드 CI 파이프라인 추가`
+- [x] **프론트엔드 CI (GitHub Actions, 실습 완료)**
+  - [x] GitHub Actions 워크플로우(`.github/workflows/frontend-ci.yml`)를 추가해 `push`/`pull_request` 시 `lint:web` → `test:web` → `build:web` → `apps/web` Playwright E2E 테스트 자동 실행 플로우를 구성해 봄
+  - [x] CI 동작과 GitHub Actions 사용 방법을 확인한 뒤, 현재는 로컬 개발/검증 위주로 사용하기 위해 해당 워크플로우 파일은 제거한 상태
+  - **커밋 포인트**: `ci(web): GitHub Actions 기반 프론트엔드 CI 파이프라인 추가 및 정리`
 
-- [x] **프론트엔드 GitHub Pages 배포 (GitHub Actions)**
-  - [x] Vite `base` 경로를 GitHub Pages 리포지토리 경로(`/practice-vibecoding-demo/`)로 설정
-  - [x] GitHub Pages 배포 워크플로우 추가: `.github/workflows/deploy-web.yml`
-  - [x] `main` 브랜치에 push 시 `apps/web/dist`를 GitHub Pages로 자동 배포
-  - [x] GitHub Actions 실행 로그와 실제 배포 URL(`https://NoTaeGwon.github.io/practice-vibecoding-demo/`)에서 동작 확인
-  - **커밋 포인트**: `ci(web): GitHub Pages 배포 워크플로우 추가`
+- [x] **프론트엔드 GitHub Pages 배포 (GitHub Actions, 실습 완료)**
+  - [x] Vite `base` 경로를 GitHub Pages 리포지토리 경로(`/practice-vibecoding-demo/`)로 설정하고, GitHub Pages 배포 워크플로우(`.github/workflows/deploy-web.yml`)로 `main` 브랜치에 push 시 `apps/web/dist`를 자동 배포하도록 구성해 봄
+  - [x] GitHub Actions 실행 로그와 실제 배포 URL(예: `https://NoTaeGwon.github.io/practice-vibecoding-demo/`)에서 동작을 확인한 뒤, 현재는 GitHub Actions 기반 배포를 잠시 중단하기 위해 워크플로우와 Vite `base` 설정을 제거한 상태
+  - **커밋 포인트**: `ci(web): GitHub Pages 배포 워크플로우 추가 및 정리`
 
 ---
 

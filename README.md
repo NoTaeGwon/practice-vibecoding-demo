@@ -43,10 +43,9 @@
   - React + Vite
   - UI: Mantine
   - 상태 관리: React Context + `useReducer`
-  - 테스트: Jest, React Testing Library (`apps/web` 전용 설정), Playwright E2E 테스트
+  - 테스트: Jest, React Testing Library (`apps/web` 전용 설정)
   - 품질 도구: ESLint
   - Git 훅: Husky pre-commit 훅에서 `apps/web` 실행 코드 변경 시에만 lint → test → build 자동 실행
-  - CI: GitHub Actions(workflow: `frontend-ci.yml`)에서 `lint:web`, `test:web`, `build:web`, Playwright E2E 테스트 자동 실행
   - 배포: GitHub Pages (GitHub Actions CI/CD)
 
 - **백엔드**
