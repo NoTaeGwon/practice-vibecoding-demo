@@ -1,0 +1,40 @@
+---
+description: 테스트 작성 및 실행 규칙
+---
+
+# 테스트 규칙
+
+## 테스트 도구
+
+- **단위 테스트**: Jest
+- **React 컴포넌트**: React Testing Library
+- **E2E 테스트**: Playwright (`apps/web/tests/e2e/`)
+
+## TDD 워크플로우
+
+### 백엔드 (필수)
+1. 테스트 작성 (`*.test.ts`)
+2. 테스트 실행 및 실패 확인
+3. 최소 구현으로 테스트 통과
+4. 리팩터링
+
+### 프론트엔드 코어 로직 (필수)
+- `reducers/*.test.ts`: 액션별 상태 전이 검증
+- `context/*.test.tsx`: Context Provider 동작 검증
+- `hooks/*.test.tsx`: 커스텀 훅 로직 검증
+- `services/*.test.ts`: API 클라이언트 검증
+
+### 프론트엔드 UI (선택)
+- 중요한 상호작용만 선택적으로 테스트 추가
+- E2E 테스트로 주요 시나리오 검증
+
+## 테스트 실행
+
+- 프론트엔드: `npm run test:web`
+- 백엔드: `npm run test:api` (구현 예정)
+- E2E: `npm run test:e2e -w apps/web`
+
+## Git 훅
+
+- **pre-commit**: `apps/web` 실행 코드 변경 시 `lint:web` → `test:web` → `build:web` 자동 실행
+- **pre-push**: E2E 테스트 자동 실행

@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+
+# 프로젝트 구조 및 기본 규칙
+
+이 프로젝트는 **TODO 웹 앱 모노레포**입니다. 모든 커뮤니케이션은 **한국어**로 진행합니다.
+
+## 모노레포 구조
+
+- 루트: `package.json` + npm workspaces
+- `apps/web`: React + Vite + Mantine 프론트엔드
+- `apps/api`: AWS Lambda 핸들러 및 도메인 로직 (Node.js/TypeScript)
+- `infra/cdk`: AWS CDK 스택 (TypeScript)
+- `packages/shared`: 공통 타입/유틸 (필요 시)
+- `docs/`: 요구사항, 설계, 작업 체크리스트
+
+## 문서 참조
+
+작업 전에 항상 다음 문서를 확인하세요:
+- 요구사항: [docs/requirements.md](mdc:docs/requirements.md)
+- 설계: [docs/design.md](mdc:docs/design.md)
+- 작업 체크리스트: [docs/tasks.md](mdc:docs/tasks.md)
+- 상세 규칙: [docs/cursorrules.md](mdc:docs/cursorrules.md)
+
+## TDD 정책
+
+- **백엔드**: 도메인 로직, 서비스, Lambda 핸들러는 **반드시 TDD**로 구현
+- **프론트엔드 코어 로직**: 상태 관리(reducer, context), API 서비스, 커스텀 훅은 **TDD**로 구현
+- **프론트엔드 UI**: Mantine 기반 UI는 **실행 코드 우선**, 필요 시 최소한의 테스트만 추가
+
+## 문서 업데이트 규칙
+
+- 설계 변경 전: `docs/requirements.md`, `docs/design.md` 먼저 수정
+- 작업 완료 후: `docs/tasks.md`에 진행 상황 반영 후 커밋

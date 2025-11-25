@@ -1,0 +1,47 @@
+---
+globs: apps/web/**/*.tsx,apps/web/**/*.ts
+description: React + Mantine 프론트엔드 개발 규칙
+---
+
+# 프론트엔드 React + Mantine 규칙
+
+## 컴포넌트 구조
+
+- 페이지: `apps/web/src/pages/*.tsx`
+- 재사용 컴포넌트: `apps/web/src/components/*.tsx`
+- 상태/컨텍스트: `apps/web/src/context/*.tsx`
+- 리듀서: `apps/web/src/reducers/*.ts`
+- API 서비스: `apps/web/src/services/*.ts`
+- 커스텀 훅: `apps/web/src/hooks/*.ts`
+- 타입: `apps/web/src/types/*.ts`
+
+## TDD 적용 범위
+
+### TDD 필수 (코어 비즈니스 로직)
+- `reducers/*.ts`: 상태 전이 로직 테스트 작성
+- `context/*.tsx`: Context Provider 동작 테스트
+- `hooks/*.ts`: 커스텀 훅 로직 테스트 (React Testing Library)
+- `services/*.ts`: API 클라이언트 테스트
+
+### 실행 코드 우선 (UI)
+- `components/*.tsx`, `pages/*.tsx`: Mantine 컴포넌트 조합으로 먼저 구현
+- 중요한 상호작용만 선택적으로 테스트 추가
+
+## Mantine 사용 가이드
+
+- 레이아웃: `AppShell`, `Container`, `Stack`, `Group`
+- 입력: `TextInput`, `Select`, `Button`, `Checkbox`
+- 필터: `SegmentedControl` 또는 `Select`
+- 리스트: `Card`, `Paper`, `Stack`, `Badge`
+- 반응형: `wrap="nowrap"`, `size="sm"`, `w={160}` 등 활용
+
+## 상태 관리
+
+- 전역 TODO 상태: `React Context + useReducer` ([apps/web/src/context/TodoContext.tsx](mdc:apps/web/src/context/TodoContext.tsx))
+- 컴포넌트 내부 UI 상태: `useState`
+
+## TypeScript 규칙
+
+- `interface` 우선 사용, `type`은 유니온/매핑에 한정
+- enum 대신 리터럴 유니온 + const 객체 사용
+- 도메인 타입은 `apps/web/src/types/todo.ts` 참조

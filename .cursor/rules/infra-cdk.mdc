@@ -1,0 +1,36 @@
+---
+globs: infra/cdk/**/*.ts
+description: AWS CDK 인프라 코드 규칙
+---
+
+# 인프라 CDK 규칙
+
+## 디렉터리 구조
+
+- `infra/cdk/`: AWS CDK 스택 정의 (TypeScript)
+- 스택은 논리적으로 분리 가능 (예: `dev`, `prod`)
+
+## 리소스 구성
+
+다음 AWS 리소스를 CDK로 정의합니다:
+
+- **API Gateway**: REST API 엔드포인트
+- **Lambda 함수**: 각 엔드포인트별 핸들러
+- **DynamoDB**: `Todos` 테이블
+- **Cognito User Pool**: 인증 및 Authorizer
+- **IAM 역할 및 정책**: Lambda 실행 권한, DynamoDB 접근 권한
+
+## 설계 문서 우선
+
+인프라 변경 전에는 반드시 [docs/design.md](mdc:docs/design.md)의 아키텍처 섹션을 먼저 업데이트합니다.
+
+## 배포
+
+- 로컬: `cdk deploy` 명령으로 배포
+- CI/CD: GitHub Actions를 통한 자동 배포 (선택 사항)
+
+## TypeScript 규칙
+
+- CDK v2 사용
+- 타입 안정성 유지
+- 환경별 설정 분리 (예: `dev`, `prod`)
